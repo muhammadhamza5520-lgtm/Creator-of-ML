@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charsetk="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muhammad Hamzah | Machine Learning Engineer</title>
+<meta name="description" content="Portfolio of Muhammad Hamzah — 10-year-old Machine Learning developer. Python, Pandas, scikit-learn, XGBoost, OpenCV and more.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050810;
+  --panel:rgba(255,255,255,.035);
+  --line:rgba(255,255,255,.09);
+  --txt:#e6ebf4;
+  --dim:#8a94ab;
+  --cyan:#22d3ee;
+  --violet:#a78bfa;
+  --green:#34d399;
+  --grad:linear-gradient(92deg,var(--cyan),var(--violet));
+  --mono:'JetBrains Mono',ui-monospace,'Cascadia Code',Consolas,monospace;
+  --sans:'Space Grotesk','Segoe UI',system-ui,sans-serif;
+  --r:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--txt);
+  font-family:var(--sans);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(700px 400px at 15% 0%, rgba(34,211,238,.08), transparent 60%),
+    radial-gradient(700px 500px at 85% 20%, rgba(167,139,250,.08), transparent 60%),
+    radial-gradient(600px 400px at 50% 100%, rgba(52,211,153,.05), transparent 60%);
+}
+body::after{
+  content:"";
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(ellipse at 50% 30%, black 30%, transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse at 50% 30%, black 30%, transparent 75%);
+}
+#net{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.8}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+
+/* ---------- nav ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  background:rgba(5,8,16,.72);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.navIn{max-width:1120px;margin:0 auto;padding:12px 22px;display:flex;align-items:center;gap:18px}
+.logo{font-family:var(--mono);font-weight:600;font-size:1.05rem;text-decoration:none;color:var(--txt)}
+.logo b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.navLinks{display:flex;gap:16px;margin-left:auto;align-items:center}
+.navLinks a{color:var(--dim);text-decoration:none;font-size:.92rem;font-family:var(--mono)}
+.navLinks a:hover{color:var(--cyan)}
+
+/* ---------- buttons ---------- */
+.btn{
+  font-family:var(--mono);font-size:.9rem;font-weight:600;
+  color:#04121a;background:var(--grad);
+  border:none;border-radius:10px;padding:11px 18px;
+  cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  box-shadow:0 0 18px rgba(34,211,238,.28);
+  transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 0 26px rgba(34,211,238,.45)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{
+  background:transparent;color:var(--txt);
+  border:1px solid var(--line);box-shadow:none;
+}
+.btn.ghost:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 16px rgba(34,211,238,.15)}
+.btn.sm{padding:8px 13px;font-size:.82rem}
+:where(button,a,input,textarea):focus-visible{outline:2px solid var(--cyan);outline-offset:2px;border-radius:8px}
+
+/* ---------- hero ---------- */
+.hero{min-height:96vh;display:flex;align-items:center;padding-top:84px}
+.heroIn{width:100%}
+.termLine{
+  font-family:var(--mono);font-size:.85rem;color:var(--green);
+  border:1px solid var(--line);background:var(--panel);
+  display:inline-block;padding:7px 13px;border-radius:8px;margin-bottom:22px;
+}
+.termLine::before{content:"$ ";color:var(--dim)}
+h1{
+  font-size:clamp(2.5rem,7.5vw,4.8rem);
+  font-weight:700;line-height:1.06;letter-spacing:-.02em;margin-bottom:14px;
+}
+h1 .grad{
+  background:var(--grad);background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:hue 6s linear infinite;
+}
+@keyframes hue{0%{background-position:0% 0}100%{background-position:200% 0}}
+.typedWrap{
+  font-family:var(--mono);font-size:clamp(1.05rem,2.6vw,1.45rem);
+  color:var(--cyan);min-height:1.7em;margin-bottom:16px;
+}
+.typedWrap .gt{color:var(--dim)}
+.cursor{animation:blink 1s steps(1) infinite;color:var(--cyan)}
+@keyframes blink{50%{opacity:0}}
+.heroSub{max-width:620px;color:var(--dim);font-size:1.05rem;margin-bottom:28px}
+.heroBtns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:44px}
+.stats{display:flex;gap:14px;flex-wrap:wrap}
+.stat{
+  border:1px solid var(--line);background:var(--panel);
+  border-radius:var(--r);padding:14px 20px;min-width:135px;
+}
+.stat b{
+  display:block;font-size:1.55rem;font-weight:700;font-family:var(--mono);
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.stat span{font-size:.78rem;color:var(--dim);font-family:var(--mono)}
+
+/* ---------- sections ---------- */
+section{padding:84px 0}
+h2{
+  font-family:var(--mono);font-size:clamp(1.4rem,3.4vw,1.9rem);
+  font-weight:600;margin-bottom:8px;
+}
+h2 .cm{color:var(--violet)}
+.secSub{color:var(--dim);margin-bottom:34px;max-width:640px}
+
+/* ---------- about ---------- */
+.about{display:grid;grid-template-columns:1.25fr 1fr;gap:30px;align-items:start}
+.about p{color:#c4ccdd;margin-bottom:14px}
+.about p b{color:var(--txt)}
+.terminal{
+  border:1px solid var(--line);background:#070b16;border-radius:var(--r);
+  overflow:hidden;font-family:var(--mono);font-size:.86rem;
+  box-shadow:0 0 34px rgba(34,211,238,.07);
+}
+.tBar{background:rgba(255,255,255,.05);padding:9px 14px;display:flex;gap:7px;align-items:center;border-bottom:1px solid var(--line)}
+.dot{width:11px;height:11px;border-radius:50%}
+.d1{background:#ff5f57}.d2{background:#febc2e}.d3{background:#28c840}
+.tBar span{margin-left:8px;color:var(--dim);font-size:.76rem}
+.tBody{padding:16px 18px;line-height:2}
+.tBody .c{color:var(--green)}
+.tBody .k{color:var(--dim)}
+.tBody .k::before{content:"$ "}
+.tBody .barTrack{color:var(--violet)}
+
+/* ---------- skills ---------- */
+.skillsGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:16px}
+.panel{border:1px solid var(--line);background:var(--panel);border-radius:var(--r);padding:20px;transition:border-color .2s ease, transform .2s ease}
+.panel:hover{border-color:rgba(34,211,238,.4);transform:translateY(-3px)}
+.panel h3{font-family:var(--mono);font-size:.92rem;color:var(--violet);margin-bottom:14px;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{
+  font-family:var(--mono);font-size:.74rem;
+  border:1px solid rgba(34,211,238,.3);background:rgba(34,211,238,.07);
+  color:#bfeefc;border-radius:999px;padding:4px 11px;white-space:nowrap;
+}
+
+/* ---------- projects ---------- */
+.slotMeta{
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px;
+  border:1px solid var(--line);background:var(--panel);border-radius:var(--r);padding:14px 18px;
+}
+.slotMeta .cnt{font-family:var(--mono);font-size:.92rem;color:var(--dim)}
+.slotMeta .cnt b{color:var(--cyan);font-size:1.1rem}
+.bar{flex:1;min-width:130px;height:7px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.bar i{display:block;height:100%;width:0%;background:var(--grad);border-radius:99px;transition:width .5s ease}
+#pagination{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px}
+.pg{
+  font-family:var(--mono);font-size:.74rem;cursor:pointer;
+  background:transparent;color:var(--dim);
+  border:1px solid var(--line);border-radius:8px;padding:6px 11px;
+  transition:all .15s ease;
+}
+.pg:hover{color:var(--cyan);border-color:rgba(34,211,238,.5)}
+.pg.on{background:var(--grad);color:#04121a;border-color:transparent;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:16px}
+
+.slot{position:relative;border-radius:var(--r);min-height:238px;transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease}
+.slot .num{
+  position:absolute;top:10px;left:12px;z-index:2;
+  font-family:var(--mono);font-size:.7rem;color:var(--dim);
+  background:rgba(5,8,16,.75);border:1px solid var(--line);
+  border-radius:6px;padding:2px 7px;
+}
+.slot.empty{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  border:1.5px dashed rgba(255,255,255,.14);background:rgba(255,255,255,.015);
+  cursor:pointer;color:var(--dim);font-family:var(--mono);
+}
+.slot.empty:hover{border-color:var(--cyan);box-shadow:0 0 22px rgba(34,211,238,.12);transform:translateY(-3px)}
+.slot.empty .plus{font-size:2.1rem;color:rgba(255,255,255,.22);line-height:1;transition:color .18s ease}
+.slot.empty:hover .plus{color:var(--cyan)}
+.slot.empty .lbl{font-size:.78rem;letter-spacing:.14em}
+.slot.empty .hint{font-size:.66rem;color:rgba(255,255,255,.28)}
+.slot.filled{
+  border:1px solid var(--line);background:var(--panel);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.slot.filled:hover{transform:translateY(-4px);border-color:rgba(34,211,238,.5);box-shadow:0 8px 30px rgba(0,0,0,.4),0 0 22px rgba(34,211,238,.12)}
+.cover{height:118px;background:#0a0f1e;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.cover img{width:100%;height:100%;object-fit:cover;display:block}
+.cover.gen{background:linear-gradient(135deg,rgba(34,211,238,.16),rgba(167,139,250,.16))}
+.cover.gen .ext{font-family:var(--mono);font-weight:600;font-size:1.15rem;color:var(--cyan);letter-spacing:.06em}
+.slot .body{padding:13px 15px 15px;display:flex;flex-direction:column;gap:8px;flex:1}
+.slot .body h3{font-size:1.02rem;font-weight:600;line-height:1.3}
+.slot .desc{
+  font-size:.84rem;color:var(--dim);
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+}
+.slot .meta{
+  margin-top:auto;display:flex;justify-content:space-between;gap:8px;
+  font-family:var(--mono);font-size:.68rem;color:rgba(255,255,255,.35);
+}
+.slot .meta span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tools{position:absolute;top:8px;right:9px;z-index:2;display:flex;gap:6px;opacity:0;transition:opacity .15s ease}
+.slot.filled:hover .tools,.slot.filled:focus-within .tools{opacity:1}
+.ic{
+  width:27px;height:27px;border-radius:7px;cursor:pointer;
+  border:1px solid var(--line);background:rgba(5,8,16,.85);color:var(--dim);
+  font-size:.8rem;display:flex;align-items:center;justify-content:center;
+}
+.ic:hover{color:var(--cyan);border-color:var(--cyan)}
+.ic.arm{color:#ff6b6b;border-color:#ff6b6b}
+
+/* ---------- modal ---------- */
+.modal{
+  position:fixed;inset:0;z-index:100;display:none;
+  align-items:center;justify-content:center;padding:20px;
+  background:rgba(3,5,10,.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+.modal.open{display:flex}
+.mBox{
+  width:100%;max-width:520px;max-height:92vh;overflow-y:auto;
+  background:#0a0f1c;border:1px solid rgba(34,211,238,.25);border-radius:16px;
+  padding:26px;box-shadow:0 0 60px rgba(34,211,238,.14);
+}
+.mBox h3{font-family:var(--mono);font-size:1.15rem;margin-bottom:18px}
+.mFileRow{display:flex;gap:14px;align-items:center;margin-bottom:18px}
+.mPrev{
+  width:82px;height:82px;flex-shrink:0;border-radius:12px;overflow:hidden;
+  border:1px solid var(--line);background:linear-gradient(135deg,rgba(34,211,238,.14),rgba(167,139,250,.14));
+  display:flex;align-items:center;justify-content:center;
+}
+.mPrev img{width:100%;height:100%;object-fit:cover}
+.mPrev .ext{font-family:var(--mono);font-weight:600;color:var(--cyan);font-size:.92rem}
+.mFileInfo{display:flex;flex-direction:column;gap:3px;min-width:0}
+.mFileInfo .tag{font-family:var(--mono);font-size:.68rem;color:var(--dim);letter-spacing:.1em}
+.mFileInfo .fn{font-family:var(--mono);font-size:.86rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mBox label{display:block;font-family:var(--mono);font-size:.8rem;color:var(--dim);margin-bottom:15px}
+.mBox input,.mBox textarea{
+  width:100%;margin-top:6px;
+  background:rgba(255,255,255,.045);border:1px solid var(--line);border-radius:10px;
+  color:var(--txt);font-family:var(--sans);font-size:.95rem;padding:11px 13px;resize:vertical;
+}
+.mBox input:focus,.mBox textarea:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(34,211,238,.12)}
+.mBtns{display:flex;justify-content:flex-end;gap:10px;margin-top:6px}
+
+/* ---------- toast / footer ---------- */
+#toast{
+  position:fixed;bottom:26px;left:50%;transform:translate(-50%,20px);
+  z-index:200;opacity:0;pointer-events:none;
+  background:#0c1322;border:1px solid rgba(34,211,238,.4);color:var(--txt);
+  font-family:var(--mono);font-size:.85rem;padding:12px 20px;border-radius:12px;
+  box-shadow:0 8px 30px rgba(0,0,0,.5),0 0 20px rgba(34,211,238,.18);
+  transition:opacity .25s ease, transform .25s ease;max-width:88vw;text-align:center;
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+footer{
+  border-top:1px solid var(--line);padding:30px 0 40px;
+  text-align:center;color:var(--dim);font-family:var(--mono);font-size:.8rem;
+}
+
+@media (max-width:820px){
+  .about{grid-template-columns:1fr}
+  .navLinks a.hideM{display:none}
+  .hero{min-height:88vh}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001s !important;transition-duration:.001s !important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<canvas id="net" aria-hidden="true"></canvas>
+
+<nav>
+  <div class="navIn">
+    <a class="logo" href="#top">MH<b>._</b></a>
+    <div class="navLinks">
+      <a href="#about" class="hideM">about</a>
+      <a href="#skills" class="hideM">skills</a>
+      <a href="#projects" class="hideM">projects</a>
+      <button class="btn ghost sm saveSite" title="Download index.html with your projects saved inside">💾 Save My Site</button>
+      <button class="btn sm uploadBtn">⬆ Upload a Project</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap heroIn">
+    <div class="termLine">python train_model.py --student muhammad_hamzah --epochs ∞</div>
+    <h1>Muhammad <span class="grad">Hamzah</span></h1>
+    <div class="typedWrap"><span class="gt">&gt;</span> I'm a <span id="typed"></span><span class="cursor">▌</span></div>
+    <p class="heroSub">10 years old. 2.5+ years deep into Machine Learning — turning raw, messy data into working models, one dataset at a time.</p>
+    <div class="heroBtns">
+      <button class="btn uploadBtn">⬆ Upload a Project</button>
+      <a class="btn ghost" href="#projects">⚡ View Projects</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>2.5+</b><span>years of ML</span></div>
+      <div class="stat"><b>30+</b><span>skills &amp; tools</span></div>
+      <div class="stat"><b><span id="statProjects">0</span>/300</b><span>project slots</span></div>
+      <div class="stat"><b>∞</b><span>curiosity</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <h2><span class="cm">//</span> about_me</h2>
+    <p class="secSub">The short version of a long training run.</p>
+    <div class="about">
+      <div>
+        <p>Hi! I'm <b>Muhammad Hamzah</b>, a 10-year-old machine learning developer. I started coding when I was about 7, and for the last 2.5+ years I've been living inside Python and ML — cleaning messy datasets with <b>Pandas</b>, hunting outliers with <b>IQR and Z-scores</b>, and training everything from <b>Linear Regression</b> up to <b>XGBoost</b>.</p>
+        <p>What I love most is the moment a model starts making real predictions from raw data. I've worked with classification, regression, clustering with <b>DBSCAN</b>, computer vision with <b>OpenCV</b>, building apps with <b>Streamlit</b>, and testing my ideas properly with <b>hypothesis testing and probability</b>.</p>
+        <p>Right now I'm leveling up in <b>Deep Learning</b>. Next stop: neural networks. 🧠</p>
+      </div>
+      <div class="terminal" aria-label="terminal card">
+        <div class="tBar"><span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span>hamzah@ml-lab: ~</span></div>
+        <div class="tBody">
+          <div class="k">whoami</div>
+          <div class="c">muhammad_hamzah</div>
+          <div class="k">age</div>
+          <div class="c">10</div>
+          <div class="k">experience</div>
+          <div class="c">2.5+ years in machine_learning</div>
+          <div class="k">current_focus</div>
+          <div class="c">deep_learning</div>
+          <div class="k">status</div>
+          <div class="barTrack">[████████░░] 80% — training...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <h2><span class="cm">//</span> skills</h2>
+    <p class="secSub">Everything in my toolkit so far — and the kit keeps growing.</p>
+    <div class="skillsGrid">
+      <div class="panel">
+        <h3>// core</h3>
+        <div class="chips">
+          <span class="chip">Python</span><span class="chip">OOP</span><span class="chip">APIs</span><span class="chip">Streamlit</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>// data_toolkit</h3>
+        <div class="chips">
+          <span class="chip">NumPy</span><span class="chip">Pandas</span><span class="chip">Matplotlib</span><span class="chip">Seaborn</span><span class="chip">OpenCV</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>// algorithms</h3>
+        <div class="chips">
+          <span class="chip">Linear Regression</span><span class="chip">Logistic Regression</span><span class="chip">Classification</span><span class="chip">Regression</span><span class="chip">SVM</span><span class="chip">KNN</span><span class="chip">Random Forest</span><span class="chip">XGBoost</span><span class="chip">DBSCAN</span><span class="chip">Deep Learning</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>// data_science</h3>
+        <div class="chips">
+          <span class="chip">EDA · describe / info / groupby / value_counts</span><span class="chip">Encoding Categoricals</span><span class="chip">Binning</span><span class="chip">Datetime Features</span><span class="chip">Outliers · IQR &amp; Z-Score</span><span class="chip">Hypothesis Testing</span><span class="chip">Probability</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <h2><span class="cm">//</span> projects</h2>
+    <p class="secSub">300 slots. Every model, notebook and experiment gets a home. Click any empty slot — or the button — to add one.</p>
+    <div class="slotMeta">
+      <span class="cnt"><b id="slotUsed">0</b> / 300 slots filled</span>
+      <div class="bar"><i id="slotBar"></i></div>
+      <button class="btn sm uploadBtn">⬆ Upload a Project</button>
+      <button class="btn ghost sm saveSite">💾 Save My Site</button>
+    </div>
+    <div id="pagination" aria-label="slot pages"></div>
+    <div id="projectGrid" class="grid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> Muhammad Hamzah · built from scratch with HTML, CSS &amp; JS · deployed on Netlify 🚀</div>
+</footer>
+
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="mBox">
+    <h3 id="mTitle">New Project</h3>
+    <div class="mFileRow">
+      <div id="mPreview" class="mPrev"></div>
+      <div class="mFileInfo">
+        <span class="tag">SELECTED FILE</span>
+        <span class="fn" id="mFile">—</span>
+      </div>
+    </div>
+    <label>Project name *
+      <input id="mName" maxlength="60" placeholder="e.g. House Price Predictor">
+    </label>
+    <label>Description
+      <textarea id="mDesc" rows="3" maxlength="500" placeholder="What does it do? What did you learn building it?"></textarea>
+    </label>
+    <label>What libraries did you use?
+      <input id="mLibs" maxlength="200" placeholder="pandas, numpy, scikit-learn">
+    </label>
+    <div class="mBtns">
+      <button id="mCancel" class="btn ghost">Cancel</button>
+      <button id="mSave" class="btn">🚀 Add to Portfolio</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="filePicker" hidden>
+<div id="toast" role="status"></div>
+
+<script id="portfolio-data" type="application/json">{"projects":[],"updated":0}</script>
+
+<script>
+(function () {
+'use strict';
+var $ = function (id) { return document.getElementById(id); };
+var TOTAL = 300, PER = 30;
+var page = 0, editIndex = null, pendingFile = null, pendingCover = null;
+var noMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- safe storage (works on Netlify / your computer; falls back to memory elsewhere) ---------- */
+var store = (function () {
+  try {
+    var t = '__mh_test__';
+    window.localStorage.setItem(t, '1');
+    window.localStorage.removeItem(t);
+    return {
+      get: function (k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } },
+      set: function (k, v) { try { window.localStorage.setItem(k, v); } catch (e) {} }
+    };
+  } catch (e) {
+    var mem = {};
+    return {
+      get: function (k) { return Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null; },
+      set: function (k, v) { mem[k] = v; }
+    };
+  }
+})();
+var KEY = 'mh_portfolio_v1';
+
+/* ---------- state: embedded data first, newer saved data wins ---------- */
+var state = { projects: [], updated: 0 };
+try {
+  var emb = JSON.parse($('portfolio-data').textContent);
+  if (emb && Array.isArray(emb.projects)) state = emb;
+} catch (e) {}
+try {
+  var raw = store.get(KEY);
+  if (raw) {
+    var s = JSON.parse(raw);
+    if (s && Array.isArray(s.projects) && (s.updated || 0) >= (state.updated || 0)) state = s;
+  }
+} catch (e) {}
+
+function persist() {
+  state.updated = Date.now();
+  store.set(KEY, JSON.stringify(state));
+}
+
+/* ---------- helpers ---------- */
+function esc(str) {
+  return String(str == null ? '' : str).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+function extOf(name) {
+  var m = /\.([a-z0-9]+)$/i.exec(name || '');
+  return m ? '.' + m[1].toUpperCase() : 'FILE';
+}
+function pad(n) { var s = String(n); while (s.length < 3) s = '0' + s; return s; }
+
+function toast(msg) {
+  var t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toast._h);
+  toast._h = setTimeout(function () { t.classList.remove('show'); }, 3600);
+}
+
+/* ---------- render the 300 slots (paginated) ---------- */
+function render() {
+  var grid = $('projectGrid');
+  var html = '';
+  var start = page * PER;
+  for (var i = start; i < start + PER; i++) {
+    var p = state.projects[i];
+    if (p) {
+      var cover = p.img
+        ? '<div class="cover"><img src="' + p.img + '" alt=""></div>'
+        : '<div class="cover gen"><span class="ext">' + esc(p.ext || 'FILE') + '</span></div>';
+      var libs = '';
+      var arr = p.libs || [];
+      for (var L = 0; L < arr.length; L++) libs += '<span class="chip">' + esc(arr[L]) + '</span>';
+      html +=
+        '<article class="slot filled">' +
+          '<span class="num">#' + pad(i + 1) + '</span>' +
+          '<div class="tools">' +
+            '<button class="ic" data-act="edit" data-i="' + i + '" title="Edit project">✎</button>' +
+            '<button class="ic" data-act="del" data-i="' + i + '" title="Delete project">✕</button>' +
+          '</div>' +
+          cover +
+          '<div class="body">' +
+            '<h3>' + esc(p.name) + '</h3>' +
+            '<p class="desc">' + esc(p.desc) + '</p>' +
+            '<div class="chips">' + libs + '</div>' +
+            '<div class="meta"><span>' + esc(p.fileName || '') + '</span><span>' + esc(p.date || '') + '</span></div>' +
+          '</div>' +
+        '</article>';
+    } else {
+      html +=
+        '<button class="slot empty" data-act="add" type="button">' +
+          '<span class="num">#' + pad(i + 1) + '</span>' +
+          '<span class="plus">+</span>' +
+          '<span class="lbl">EMPTY SLOT</span>' +
+          '<span class="hint">click to upload a project</span>' +
+        '</button>';
+    }
+  }
+  grid.innerHTML = html;
+  $('slotUsed').textContent = state.projects.length;
+  $('statProjects').textContent = state.projects.length;
+  $('slotBar').style.width = (state.projects.length / TOTAL * 100) + '%';
+  renderPages();
+}
+
+function renderPages() {
+  var wrap = $('pagination');
+  var pages = Math.ceil(TOTAL / PER);
+  var h = '';
+  for (var p = 0; p < pages; p++) {
+    h += '<button class="pg' + (p === page ? ' on' : '') + '" data-pg="' + p + '" type="button">' +
+         (p * PER + 1) + '–' + ((p + 1) * PER) + '</button>';
+  }
+  wrap.innerHTML = h;
+}
+
+/* ---------- upload flow: pick a file → fill the form ---------- */
+function startUpload() {
+  if (state.projects.length >= TOTAL) { toast('All 300 slots are full! Absolute legend. 🤯'); return; }
+  editIndex = null;
+  var fp = $('filePicker');
+  fp.value = '';
+  fp.click();
+}
+
+function makeCover(file) {
+  return new Promise(function (resolve) {
+    if (!file || !file.type || file.type.indexOf('image/') !== 0) { resolve(null); return; }
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function () {
+      try {
+        var max = 900;
+        var sc = Math.min(1, max / img.width);
+        var c = document.createElement('canvas');
+        c.width = Math.max(1, Math.round(img.width * sc));
+        c.height = Math.max(1, Math.round(img.height * sc));
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        resolve(c.toDataURL('image/jpeg', 0.82));
+      } catch (e) { resolve(null); }
+      URL.revokeObjectURL(url);
+    };
+    img.onerror = function () { URL.revokeObjectURL(url); resolve(null); };
+    img.src = url;
+  });
+}
+
+$('filePicker').addEventListener('change', function (e) {
+  var f = e.target.files && e.target.files[0];
+  if (!f) return;
+  pendingFile = { name: f.name, ext: extOf(f.name) };
+  makeCover(f).then(function (dataUrl) {
+    pendingCover = dataUrl;
+    openModal(null);
+  });
+});
+
+/* ---------- modal ---------- */
+function openModal(i) {
+  editIndex = (typeof i === 'number') ? i : null;
+  var editing = editIndex !== null && state.projects[editIndex];
+  var p = editing ? state.projects[editIndex] : null;
+  $('mTitle').textContent = editing ? 'Edit Project' : 'New Project';
+  $('mName').value = p ? p.name : '';
+  $('mDesc').value = p ? p.desc : '';
+  $('mLibs').value = p ? (p.libs || []).join(', ') : '';
+  var img = editing ? p.img : pendingCover;
+  var fname = editing ? (p.fileName || '') : (pendingFile ? pendingFile.name : '');
+  var ext = editing ? (p.ext || 'FILE') : (pendingFile ? pendingFile.ext : 'FILE');
+  $('mPreview').innerHTML = img
+    ? '<img src="' + img + '" alt="">'
+    : '<span class="ext">' + esc(ext) + '</span>';
+  $('mFile').textContent = fname || '—';
+  $('mSave').textContent = editing ? '✅ Save Changes' : '🚀 Add to Portfolio';
+  $('modal').classList.add('open');
+  setTimeout(function () { $('mName').focus(); }, 60);
+}
+function closeModal() { $('modal').classList.remove('open'); }
+
+$('mCancel').addEventListener('click', closeModal);
+$('modal').addEventListener('click', function (e) { if (e.target.id === 'modal') closeModal(); });
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+$('mSave').addEventListener('click', function () {
+  var name = $('mName').value.trim();
+  if (!name) { toast('Give your project a name!'); $('mName').focus(); return; }
+  var desc = $('mDesc').value.trim();
+  var libs = $('mLibs').value.split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+
+  if (editIndex !== null && state.projects[editIndex]) {
+    var p = state.projects[editIndex];
+    p.name = name; p.desc = desc; p.libs = libs;
+    toast('✅ Project updated');
+  } else {
+    state.projects.push({
+      name: name,
+      desc: desc,
+      libs: libs,
+      fileName: pendingFile ? pendingFile.name : '',
+      ext: pendingFile ? pendingFile.ext : 'FILE',
+      img: pendingCover || null,
+      date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+    });
+    var slot = state.projects.length;
+    page = Math.floor((slot - 1) / PER);
+    toast('🎉 Added to slot #' + pad(slot) + ' — hit 💾 Save My Site to lock it in!');
+  }
+  pendingFile = null; pendingCover = null;
+  persist();
+  render();
+  closeModal();
+});
+
+/* ---------- grid + pagination events (delegation) ---------- */
+$('projectGrid').addEventListener('click', function (e) {
+  var btn = e.target.closest('[data-act]');
+  if (!btn) return;
+  var act = btn.getAttribute('data-act');
+  if (act === 'add') { startUpload(); return; }
+  var i = parseInt(btn.getAttribute('data-i'), 10);
+  if (act === 'edit') { openModal(i); return; }
+  if (act === 'del') {
+    if (btn.getAttribute('data-arm')) {
+      state.projects.splice(i, 1);
+      persist(); render();
+      toast('🗑 Project removed');
+    } else {
+      btn.setAttribute('data-arm', '1');
+      btn.textContent = '?';
+      btn.classList.add('arm');
+      btn.title = 'Click again to confirm delete';
+      setTimeout(function () {
+        if (btn.isConnected) {
+          btn.removeAttribute('data-arm');
+          btn.textContent = '✕';
+          btn.classList.remove('arm');
+          btn.title = 'Delete project';
+        }
+      }, 2600);
+    }
+  }
+});
+
+$('pagination').addEventListener('click', function (e) {
+  var b = e.target.closest('[data-pg]');
+  if (!b) return;
+  page = parseInt(b.getAttribute('data-pg'), 10);
+  render();
+});
+
+/* ---------- Save My Site: download index.html with projects baked in ---------- */
+function downloadSite() {
+  var clone = document.documentElement.cloneNode(true);
+  var d = clone.querySelector('#portfolio-data');
+  if (d) d.textContent = JSON.stringify(state).replace(/<\//g, '<\\/');
+  ['projectGrid', 'pagination', 'toast'].forEach(function (id) {
+    var el = clone.querySelector('#' + id);
+    if (el) el.innerHTML = '';
+  });
+  var m = clone.querySelector('#modal');
+  if (m) m.classList.remove('open');
+  var t = clone.querySelector('#toast');
+  if (t) t.classList.remove('show');
+  var html = '<!DOCTYPE html>\n' + clone.outerHTML;
+  var blob = new Blob([html], { type: 'text/html' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'index.html';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+  toast('💾 index.html downloaded — drag its folder to Netlify to publish!');
+}
+
+/* ---------- wire up buttons ---------- */
+Array.prototype.forEach.call(document.querySelectorAll('.uploadBtn'), function (b) {
+  b.addEventListener('click', startUpload);
+});
+Array.prototype.forEach.call(document.querySelectorAll('.saveSite'), function (b) {
+  b.addEventListener('click', downloadSite);
+});
+
+/* ---------- typing effect ---------- */
+var roles = ['Machine Learning Engineer', 'Python Developer', 'Data Explorer', 'Future AI Researcher'];
+(function typeLoop() {
+  var el = $('typed');
+  if (!el) return;
+  if (noMotion) { el.textContent = roles[0]; return; }
+  var ri = 0, ci = 0, del = false;
+  (function tick() {
+    var word = roles[ri];
+    ci += del ? -1 : 1;
+    el.textContent = word.slice(0, ci);
+    var wait = del ? 40 : 78;
+    if (!del && ci === word.length) { wait = 1700; del = true; }
+    else if (del && ci === 0) { del = false; ri = (ri + 1) % roles.length; wait = 320; }
+    setTimeout(tick, wait);
+  })();
+})();
+
+/* ---------- neural network background ---------- */
+(function neuralNet() {
+  var cv = $('net');
+  if (!cv) return;
+  var cx = cv.getContext('2d');
+  var W = 0, H = 0, nodes = [];
+  function resize() {
+    W = cv.width = window.innerWidth;
+    H = cv.height = window.innerHeight;
+    var n = Math.min(70, Math.max(24, Math.floor(W / 18)));
+    nodes = [];
+    for (var i = 0; i < n; i++) {
+      nodes.push({
+        x: Math.random() * W, y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35
+      });
+    }
+  }
+  function draw() {
+    cx.clearRect(0, 0, W, H);
+    var i, j;
+    for (i = 0; i < nodes.length; i++) {
+      var p = nodes[i];
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+    }
+    for (i = 0; i < nodes.length; i++) {
+      var a = nodes[i];
+      cx.fillStyle = 'rgba(34,211,238,.5)';
+      cx.fillRect(a.x - 1, a.y - 1, 2, 2);
+      for (j = i + 1; j < nodes.length; j++) {
+        var b = nodes[j];
+        var dx = a.x - b.x, dy = a.y - b.y, d = dx * dx + dy * dy;
+        if (d < 16900) {
+          cx.strokeStyle = 'rgba(167,139,250,' + (0.15 * (1 - d / 16900)).toFixed(3) + ')';
+          cx.beginPath();
+          cx.moveTo(a.x, a.y);
+          cx.lineTo(b.x, b.y);
+          cx.stroke();
+        }
+      }
+    }
+  }
+  function loop() { draw(); requestAnimationFrame(loop); }
+  window.addEventListener('resize', resize);
+  resize();
+  if (noMotion) { draw(); } else { loop(); }
+})();
+
+/* ---------- init ---------- */
+$('yr').textContent = new Date().getFullYear();
+render();
+})();
+</script>
+</body>
+</html>
